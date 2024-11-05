@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-// Abstract class for product properties
 abstract class Product {
     private int productId;
     private String name;
@@ -25,7 +24,6 @@ abstract class Product {
 
     public abstract void displayProduct();
 
-    // Getter methods
     public int getProductId() { return productId; }
     public String getName() { return name; }
     public double getPrice() { return price; }
@@ -38,7 +36,6 @@ abstract class Product {
     }
 }
 
-// Concrete class for grocery items
 class GroceryItem extends Product {
     public GroceryItem(int productId, String name, double price, int quantity, String expiryDate) throws ParseException {
         super(productId, name, price, quantity, expiryDate);
@@ -51,14 +48,13 @@ class GroceryItem extends Product {
     }
 }
 
-// Inventory class using an array of Product objects
 class Inventory {
     private Product[] products;
     private int productCount = 0;
     private final int MAX_PRODUCTS = 100;
 
     public Inventory() {
-        products = new Product[MAX_PRODUCTS]; // Array to hold up to 100 products
+        products = new Product[MAX_PRODUCTS]; // Array of objects to hold 100 products
     }
 
     public void addProduct(Product product) {
@@ -78,7 +74,7 @@ class Inventory {
         for (int i = 0; i < productCount; i++) {
             if (products[i] != null && products[i].isExpired()) {
                 System.out.println("Removing expired product: " + products[i].getName());
-                products[i] = null; // Mark the slot as empty
+                products[i] = null; 
             }
         }
         compactArray();
@@ -116,23 +112,20 @@ class Inventory {
         }
     }
 
-    // Helper method to remove nulls from the array after removing expired products
-    private void compactArray() {
+    private void compactArray() { // If there is null item in the products array it is compacted
         int shiftIndex = 0;
         for (int i = 0; i < productCount; i++) {
             if (products[i] != null) {
                 products[shiftIndex++] = products[i];
             }
         }
-        // Set the remaining elements to null
         for (int i = shiftIndex; i < productCount; i++) {
             products[i] = null;
         }
-        productCount = shiftIndex; // Update the product count
+        productCount = shiftIndex; 
     }
 }
 
-// Billing class to handle purchases and bill generation
 class Billing {
     private Inventory inventory;
 
@@ -151,7 +144,7 @@ class Billing {
                 productId = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid number for Product ID.");
-                scanner.next(); // Clear the invalid input
+                scanner.next(); 
                 continue;
             }
 
@@ -174,7 +167,7 @@ class Billing {
                 quantity = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid number for quantity.");
-                scanner.next(); // Clear the invalid input
+                scanner.next();
                 continue;
             }
 
@@ -187,16 +180,13 @@ class Billing {
             }
         }
 
-        // Display the total bill
         System.out.println("\nYour Bill:");
         System.out.println("Total Amount: $" + totalBill);
 
-        // Remove expired products after the purchase
         inventory.removeExpiredProducts();
     }
 }
 
-// Main class for the inventory management system
 public class InventoryManagementSystem {
     public static void main(String[] args) {
         try {
@@ -231,7 +221,7 @@ public class InventoryManagementSystem {
                     choice = scanner.nextInt();
                 } catch (InputMismatchException e) {
                     System.out.println("Invalid choice. Please enter a number between 1 and 5.");
-                    scanner.next(); // Clear the invalid input
+                    scanner.next();
                     continue;
                 }
 
@@ -246,10 +236,10 @@ public class InventoryManagementSystem {
                             id = scanner.nextInt();
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid input. Please enter a valid number for Product ID.");
-                            scanner.next(); // Clear the invalid input
+                            scanner.next(); 
                             continue;
                         }
-                        scanner.nextLine(); // Consume newline
+                        scanner.nextLine(); 
                         System.out.print("Enter Product Name: ");
                         String name = scanner.nextLine();
                         double price = 0.0;
@@ -258,7 +248,7 @@ public class InventoryManagementSystem {
                             price = scanner.nextDouble();
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid input. Please enter a valid number for Product Price.");
-                            scanner.next(); // Clear the invalid input
+                            scanner.next(); 
                             continue;
                         }
                         int quantity = 0;
@@ -267,10 +257,10 @@ public class InventoryManagementSystem {
                             quantity = scanner.nextInt();
                         } catch (InputMismatchException e) {
                             System.out.println("Invalid input. Please enter a valid number for Product Quantity.");
-                            scanner.next(); // Clear the invalid input
+                            scanner.next(); 
                             continue;
                         }
-                        scanner.nextLine(); // Consume newline
+                        scanner.nextLine(); 
                         System.out.print("Enter Expiry Date (dd-MM-yyyy): ");
                         String expiryDate = scanner.nextLine();
                         try {
